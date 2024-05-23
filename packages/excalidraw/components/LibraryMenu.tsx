@@ -27,7 +27,7 @@ import { getSelectedElements } from "../scene";
 import { useUIAppState } from "../context/ui-appState";
 
 import "./LibraryMenu.scss";
-import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
+// import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
 import { isShallowEqual } from "../utils";
 import type { NonDeletedExcalidrawElement } from "../element/types";
 import { LIBRARY_DISABLED_TYPES } from "../constants";
@@ -134,7 +134,7 @@ export const LibraryMenuContent = ({
         onSelectItems={onSelectItems}
         selectedItems={selectedItems}
       />
-      {showBtn && (
+      {/* {showBtn && (
         <LibraryMenuControlButtons
           className="library-menu-control-buttons--at-bottom"
           style={{ padding: "16px 12px 0 12px" }}
@@ -142,7 +142,7 @@ export const LibraryMenuContent = ({
           libraryReturnUrl={libraryReturnUrl}
           theme={theme}
         />
-      )}
+      )} */}
     </LibraryMenuWrapper>
   );
 };

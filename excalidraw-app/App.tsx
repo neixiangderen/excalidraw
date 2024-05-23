@@ -111,19 +111,26 @@ import {
   DEFAULT_CATEGORIES,
 } from "../packages/excalidraw/components/CommandPalette/CommandPalette";
 import {
-  GithubIcon,
-  XBrandIcon,
-  DiscordIcon,
+  // GithubIcon,
+  // XBrandIcon,
+  // DiscordIcon,
   ExcalLogo,
   usersIcon,
   exportToPlus,
   share,
-  youtubeIcon,
+  // youtubeIcon,
 } from "../packages/excalidraw/components/icons";
 import { appThemeAtom, useHandleAppTheme } from "./useHandleAppTheme";
+import LocaIDBData from "./data/LocaIDBData";
 
 polyfill();
-
+LibraryIndexedDBAdapter.load().then((data) => {
+  if (data) {
+    LibraryIndexedDBAdapter.save({ libraryItems: [...data.libraryItems,...LocaIDBData].filter((item, index, self) =>
+      self.findIndex((i) => i.id === ('' + item.id)) === index
+    ) })
+  }
+});
 window.EXCALIDRAW_THROTTLE_RENDER = true;
 
 declare global {
@@ -540,7 +547,6 @@ const ExcalidrawWrapper = () => {
         }
       }
     }, SYNC_BROWSER_TABS_TIMEOUT);
-
     const onUnload = () => {
       LocalData.flushSave();
     };

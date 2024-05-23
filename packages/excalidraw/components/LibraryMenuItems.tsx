@@ -18,7 +18,7 @@ import Stack from "./Stack";
 import { MIME_TYPES } from "../constants";
 import Spinner from "./Spinner";
 import { duplicateElements } from "../element/newElement";
-import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
+// import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
 import { LibraryDropdownMenu } from "./LibraryMenuHeaderContent";
 import {
   LibraryMenuSection,
@@ -255,9 +255,7 @@ export default function LibraryMenuItems({
                 {t("library.noItems")}
               </div>
               <div className="library-menu-items__no-items__hint">
-                {publishedItems.length > 0
-                  ? t("library.hint_emptyPrivateLibrary")
-                  : t("library.hint_emptyLibrary")}
+                {t("library.hint_emptyPrivateLibrary")}
               </div>
             </div>
           ) : (
@@ -286,7 +284,7 @@ export default function LibraryMenuItems({
           )}
         </>
 
-        <>
+        {/* <>
           {(publishedItems.length > 0 ||
             pendingElements.length > 0 ||
             unpublishedItems.length > 0) && (
@@ -321,9 +319,9 @@ export default function LibraryMenuItems({
               {t("library.noItems")}
             </div>
           ) : null}
-        </>
+        </> */}
 
-        {showBtn && (
+        {/* {showBtn && (
           <LibraryMenuControlButtons
             style={{ padding: "16px 0", width: "100%" }}
             id={id}
@@ -335,7 +333,7 @@ export default function LibraryMenuItems({
               onSelectItems={onSelectItems}
             />
           </LibraryMenuControlButtons>
-        )}
+        )} */}
       </Stack.Col>
     </div>
   );

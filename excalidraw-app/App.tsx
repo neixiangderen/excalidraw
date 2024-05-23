@@ -129,6 +129,10 @@ LibraryIndexedDBAdapter.load().then((data) => {
     LibraryIndexedDBAdapter.save({ libraryItems: [...data.libraryItems,...LocaIDBData].filter((item, index, self) =>
       self.findIndex((i) => i.id === ('' + item.id)) === index
     ) })
+  }else{
+    LibraryIndexedDBAdapter.save({ libraryItems: [...LocaIDBData].filter((item, index, self) =>
+      self.findIndex((i) => i.id === ('' + item.id)) === index
+    ) })
   }
 });
 window.EXCALIDRAW_THROTTLE_RENDER = true;

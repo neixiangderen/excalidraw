@@ -42,13 +42,13 @@ import {
   EmbedIcon,
   extraToolsIcon,
   frameToolIcon,
-  mermaidLogoIcon,
+  // mermaidLogoIcon,
   laserPointerToolIcon,
-  OpenAIIcon,
-  MagicIcon,
+  // OpenAIIcon,
+  // MagicIcon,
 } from "./icons";
 import { KEYS } from "../keys";
-import { useTunnels } from "../context/tunnels";
+// import { useTunnels } from "../context/tunnels";
 
 export const canChangeStrokeColor = (
   appState: UIAppState,
@@ -263,7 +263,7 @@ export const ShapesSwitcher = ({
   const laserToolSelected = activeTool.type === "laser";
   const embeddableToolSelected = activeTool.type === "embeddable";
 
-  const { TTDDialogTriggerTunnel } = useTunnels();
+  // const { TTDDialogTriggerTunnel } = useTunnels();
 
   return (
     <>

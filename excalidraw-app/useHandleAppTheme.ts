@@ -10,7 +10,7 @@ export const appThemeAtom = atom<Theme | "system">(
   (localStorage.getItem(STORAGE_KEYS.LOCAL_STORAGE_THEME) as
     | Theme
     | "system"
-    | null) || THEME.LIGHT,
+    | null) || THEME.DARK,
 );
 
 const getDarkThemeMediaQuery = (): MediaQueryList | undefined =>
@@ -18,7 +18,7 @@ const getDarkThemeMediaQuery = (): MediaQueryList | undefined =>
 
 export const useHandleAppTheme = () => {
   const [appTheme, setAppTheme] = useAtom(appThemeAtom);
-  const [editorTheme, setEditorTheme] = useState<Theme>(THEME.LIGHT);
+  const [editorTheme, setEditorTheme] = useState<Theme>(THEME.DARK);
 
   useEffect(() => {
     const mediaQuery = getDarkThemeMediaQuery();

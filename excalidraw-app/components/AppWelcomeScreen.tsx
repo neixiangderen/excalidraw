@@ -55,7 +55,7 @@ export const AppWelcomeScreen: React.FC<{
               onSelect={() => props.onCollabDialogOpen()}
             />
           )}
-          {!isExcalidrawPlusSignedUser && (
+          {/* {!isExcalidrawPlusSignedUser && (
             <WelcomeScreen.Center.MenuItemLink
               href={`${
                 import.meta.env.VITE_APP_PLUS_LP
@@ -65,7 +65,7 @@ export const AppWelcomeScreen: React.FC<{
             >
               Sign up
             </WelcomeScreen.Center.MenuItemLink>
-          )}
+          )} */}
         </WelcomeScreen.Center.Menu>
       </WelcomeScreen.Center>
     </WelcomeScreen>

@@ -18,7 +18,7 @@ import Stack from "./Stack";
 import { MIME_TYPES } from "../constants";
 import Spinner from "./Spinner";
 import { duplicateElements } from "../element/newElement";
-// import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
+import { LibraryMenuControlButtons } from "./LibraryMenuControlButtons";
 import { LibraryDropdownMenu } from "./LibraryMenuHeaderContent";
 import {
   LibraryMenuSection,
@@ -208,19 +208,17 @@ export default function LibraryMenuItems({
       className="library-menu-items-container"
       style={
         pendingElements.length ||
-        unpublishedItems.length ||
-        publishedItems.length
+          unpublishedItems.length ||
+          publishedItems.length
           ? { justifyContent: "flex-start" }
           : { borderBottom: 0 }
       }
     >
-      {!isLibraryEmpty && (
-        <LibraryDropdownMenu
-          selectedItems={selectedItems}
-          onSelectItems={onSelectItems}
-          className="library-menu-dropdown-container--in-heading"
-        />
-      )}
+      <LibraryDropdownMenu
+        selectedItems={selectedItems}
+        onSelectItems={onSelectItems}
+        className="library-menu-dropdown-container--in-heading"
+      />
       <Stack.Col
         className="library-menu-items-container__items"
         align="start"
@@ -284,14 +282,14 @@ export default function LibraryMenuItems({
           )}
         </>
 
-        {/* <>
+        <>
           {(publishedItems.length > 0 ||
             pendingElements.length > 0 ||
             unpublishedItems.length > 0) && (
-            <div className="library-menu-items-container__header library-menu-items-container__header--excal">
-              {t("labels.excalidrawLib")}
-            </div>
-          )}
+              <div className="library-menu-items-container__header library-menu-items-container__header--excal">
+                {t("labels.excalidrawLib")}
+              </div>
+            )}
           {publishedItems.length > 0 ? (
             <LibraryMenuSectionGrid>
               <LibraryMenuSection
@@ -319,7 +317,7 @@ export default function LibraryMenuItems({
               {t("library.noItems")}
             </div>
           ) : null}
-        </> */}
+        </>
 
         {/* {showBtn && (
           <LibraryMenuControlButtons

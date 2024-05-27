@@ -124,17 +124,6 @@ import { appThemeAtom, useHandleAppTheme } from "./useHandleAppTheme";
 import LocaIDBData from "./data/LocaIDBData";
 
 polyfill();
-LibraryIndexedDBAdapter.load().then((data) => {
-  if (data) {
-    LibraryIndexedDBAdapter.save({ libraryItems: [...data.libraryItems,...LocaIDBData].filter((item, index, self) =>
-      self.findIndex((i) => i.id === ('' + item.id)) === index
-    ) })
-  }else{
-    LibraryIndexedDBAdapter.save({ libraryItems: [...LocaIDBData].filter((item, index, self) =>
-      self.findIndex((i) => i.id === ('' + item.id)) === index
-    ) })
-  }
-});
 window.EXCALIDRAW_THROTTLE_RENDER = true;
 
 declare global {
@@ -323,11 +312,11 @@ const initializeScene = async (opts: {
   } else if (scene) {
     return isExternalScene && jsonBackendMatch
       ? {
-          scene,
-          isExternalScene,
-          id: jsonBackendMatch[1],
-          key: jsonBackendMatch[2],
-        }
+        scene,
+        isExternalScene,
+        id: jsonBackendMatch[1],
+        key: jsonBackendMatch[2],
+      }
       : { scene, isExternalScene: false };
   }
   return { scene: null, isExternalScene: false };
@@ -386,7 +375,31 @@ const ExcalidrawWrapper = () => {
     if (!excalidrawAPI || (!isCollabDisabled && !collabAPI)) {
       return;
     }
-
+    LibraryIndexedDBAdapter.load().then((data) => {
+      let res = [];
+      if (data) {
+        res = [...data.libraryItems, ...LocaIDBData].filter(
+          (item, index, self) =>
+            self.findIndex((i) => i.id === `${item.id}`) === index,
+        )
+        console.log(res)
+        LibraryIndexedDBAdapter.save({
+          libraryItems: res,
+        });
+      } else {
+        res = [...LocaIDBData].filter(
+          (item, index, self) =>
+            self.findIndex((i) => i.id === `${item.id}`) === index,
+        )
+        console.log(res)
+        LibraryIndexedDBAdapter.save({
+          libraryItems: res,
+        });
+      }
+      excalidrawAPI.updateLibrary({
+        libraryItems: res,
+      });
+    });
     const loadImages = (
       data: ResolutionType<typeof initializeScene>,
       isInitialLoad = false,
@@ -742,8 +755,7 @@ const ExcalidrawWrapper = () => {
     keywords: ["plus", "cloud", "server"],
     perform: () => {
       window.open(
-        `${
-          import.meta.env.VITE_APP_PLUS_LP
+        `${import.meta.env.VITE_APP_PLUS_LP
         }/plus?utm_source=excalidraw&utm_medium=app&utm_content=command_palette`,
         "_blank",
       );
@@ -765,8 +777,7 @@ const ExcalidrawWrapper = () => {
     ],
     perform: () => {
       window.open(
-        `${
-          import.meta.env.VITE_APP_PLUS_APP
+        `${import.meta.env.VITE_APP_PLUS_APP
         }?utm_source=excalidraw&utm_medium=app&utm_content=command_palette`,
         "_blank",
       );
@@ -793,27 +804,27 @@ const ExcalidrawWrapper = () => {
               onExportToBackend,
               renderCustomUI: excalidrawAPI
                 ? (elements, appState, files) => {
-                    return (
-                      <ExportToExcalidrawPlus
-                        elements={elements}
-                        appState={appState}
-                        files={files}
-                        name={excalidrawAPI.getName()}
-                        onError={(error) => {
-                          excalidrawAPI?.updateScene({
-                            appState: {
-                              errorMessage: error.message,
-                            },
-                          });
-                        }}
-                        onSuccess={() => {
-                          excalidrawAPI.updateScene({
-                            appState: { openDialog: null },
-                          });
-                        }}
-                      />
-                    );
-                  }
+                  return (
+                    <ExportToExcalidrawPlus
+                      elements={elements}
+                      appState={appState}
+                      files={files}
+                      name={excalidrawAPI.getName()}
+                      onError={(error) => {
+                        excalidrawAPI?.updateScene({
+                          appState: {
+                            errorMessage: error.message,
+                          },
+                        });
+                      }}
+                      onSuccess={() => {
+                        excalidrawAPI.updateScene({
+                          appState: { openDialog: null },
+                        });
+                      }}
+                    />
+                  );
+                }
                 : undefined,
             },
           },
@@ -877,8 +888,7 @@ const ExcalidrawWrapper = () => {
           onTextSubmit={async (input) => {
             try {
               const response = await fetch(
-                `${
-                  import.meta.env.VITE_APP_AI_BACKEND
+                `${import.meta.env.VITE_APP_AI_BACKEND
                 }/v1/ai/text-to-diagram/generate`,
                 {
                   method: "POST",
@@ -898,9 +908,9 @@ const ExcalidrawWrapper = () => {
                 "X-Ratelimit-Remaining",
               )
                 ? parseInt(
-                    response.headers.get("X-Ratelimit-Remaining") || "0",
-                    10,
-                  )
+                  response.headers.get("X-Ratelimit-Remaining") || "0",
+                  10,
+                )
                 : undefined;
 
               const json = await response.json();
@@ -1110,11 +1120,11 @@ const ExcalidrawWrapper = () => {
             // },
             ...(isExcalidrawPlusSignedUser
               ? [
-                  {
-                    ...ExcalidrawPlusAppCommand,
-                    label: "Sign in / Go to Excalidraw+",
-                  },
-                ]
+                {
+                  ...ExcalidrawPlusAppCommand,
+                  label: "Sign in / Go to Excalidraw+",
+                },
+              ]
               : [ExcalidrawPlusCommand, ExcalidrawPlusAppCommand]),
 
             {

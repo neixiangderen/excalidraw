@@ -40,6 +40,7 @@ export default defineConfig({
     },
     sourcemap: true,
   },
+  base:"./",
   plugins: [
     react(),
     checker({
